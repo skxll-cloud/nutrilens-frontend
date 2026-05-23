@@ -8,11 +8,9 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { router } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useAuthStore } from '../../src/store/authStore';
 import { Button } from '../../src/components/ui';
 import { Colors, Typography, Spacing, Radius } from '../../src/utils/theme';
@@ -22,24 +20,26 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const { signIn, signUp } = useAuthStore();
 
   async function handleSubmit() {
+    setError('');
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      setError('Veuillez remplir tous les champs.');
       return;
     }
     setLoading(true);
     try {
       if (isSignUp) {
         await signUp(email.trim(), password);
-        Alert.alert('Success', 'Account created! Check your email to confirm.');
+        router.replace('/(tabs)');
       } else {
         await signIn(email.trim(), password);
         router.replace('/(tabs)');
       }
     } catch (err: any) {
-      Alert.alert('Error', err.message);
+      setError(err.message ?? 'Une erreur est survenue.');
     } finally {
       setLoading(false);
     }
@@ -66,6 +66,12 @@ export default function LoginScreen() {
         {/* Form */}
         <View style={styles.form}>
           <Text style={styles.title}>{isSignUp ? 'Créer un compte' : 'Connexion'}</Text>
+
+          {error ? (
+            <View style={styles.errorBox}>
+              <Text style={styles.errorText}>{error}</Text>
+            </View>
+          ) : null}
 
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Email</Text>
@@ -101,7 +107,7 @@ export default function LoginScreen() {
           />
 
           <TouchableOpacity
-            onPress={() => setIsSignUp(!isSignUp)}
+            onPress={() => { setIsSignUp(!isSignUp); setError(''); }}
             style={styles.switchBtn}
           >
             <Text style={styles.switchText}>
@@ -152,6 +158,15 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
   },
   title: { ...Typography.h2, color: Colors.textPrimary, marginBottom: Spacing.lg },
+  errorBox: {
+    backgroundColor: `${Colors.error}18`,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: `${Colors.error}40`,
+    padding: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  errorText: { ...Typography.bodySmall, color: Colors.error, textAlign: 'center' },
   inputGroup: { marginBottom: Spacing.md },
   inputLabel: { ...Typography.label, color: Colors.textSecondary, marginBottom: 6, textTransform: 'uppercase' },
   input: {
