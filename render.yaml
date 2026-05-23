@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: nutrilens-web
+    runtime: static
+    buildCommand: npm install && npx expo export -p web
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: EXPO_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: EXPO_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: EXPO_PUBLIC_API_URL
+        sync: false

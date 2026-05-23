@@ -42,6 +42,11 @@
       ]
     ],
     "scheme": "nutrilens",
+    "web": {
+      "output": "single",
+      "bundler": "metro",
+      "favicon": "./assets/icon.png"
+    },
     "experiments": {
       "typedRoutes": true
     },
