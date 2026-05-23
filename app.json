@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "NutriLens",
+    "slug": "nutrilens",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A0F"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.nutrilens.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "NutriLens needs camera access to scan food",
+        "NSPhotoLibraryUsageDescription": "NutriLens needs photo library access to import food images"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0F"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.nutrilens.app"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-camera",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "NutriLens needs access to your photos to scan food."
+        }
+      ]
+    ],
+    "scheme": "nutrilens",
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "467a2c6f-2b6e-4f5d-8b6e-cebc597645ec"
+      }
+    },
+    "owner": "skxll-cloud"
+  }
+}
