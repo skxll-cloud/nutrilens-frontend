@@ -8,11 +8,13 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
-import { useFocusEffect, Link } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
+import { Platform } from 'react-native';
 import { getDashboard } from '../../src/services/api';
 import { DashboardData } from '../../src/types';
 import { Card, MacroBar } from '../../src/components/ui';
 import { Colors, Typography, Spacing, Radius } from '../../src/utils/theme';
+import { useScan } from './_layout';
 
 const MACROS = [
   { key: 'calories' as const, label: 'Calories', color: Colors.accent4, unit: 'kcal' },
@@ -25,6 +27,7 @@ export default function DashboardScreen() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const { openScan } = useScan();
 
   const load = async () => {
     try {
@@ -124,16 +127,18 @@ export default function DashboardScreen() {
       </Card>
 
       {/* Quick Scan CTA */}
-      <Link href="/scan" asChild>
-        <TouchableOpacity style={styles.scanCTA} activeOpacity={0.85}>
-          <Text style={{ fontSize: 28 }}>📷</Text>
-          <View style={{ flex: 1, marginLeft: Spacing.md }}>
-            <Text style={styles.ctaTitle}>Scanner un repas</Text>
-            <Text style={styles.ctaSubtitle}>Analyse IA instantanée</Text>
-          </View>
-          <Text style={{ color: Colors.primary, fontSize: 20 }}>→</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity
+        style={styles.scanCTA}
+        activeOpacity={0.85}
+        onPress={Platform.OS === 'web' ? openScan : undefined}
+      >
+        <Text style={{ fontSize: 28 }}>📷</Text>
+        <View style={{ flex: 1, marginLeft: Spacing.md }}>
+          <Text style={styles.ctaTitle}>Scanner un repas</Text>
+          <Text style={styles.ctaSubtitle}>Analyse IA instantanée</Text>
+        </View>
+        <Text style={{ color: Colors.primary, fontSize: 20 }}>→</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
