@@ -8,7 +8,7 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
-import { useFocusEffect, router } from 'expo-router';
+import { useFocusEffect, Link } from 'expo-router';
 import { getDashboard } from '../../src/services/api';
 import { DashboardData } from '../../src/types';
 import { Card, MacroBar } from '../../src/components/ui';
@@ -124,18 +124,16 @@ export default function DashboardScreen() {
       </Card>
 
       {/* Quick Scan CTA */}
-      <TouchableOpacity
-        style={styles.scanCTA}
-        onPress={() => router.push('/(tabs)/scan')}
-        activeOpacity={0.85}
-      >
-        <Text style={{ fontSize: 28 }}>📷</Text>
-        <View style={{ flex: 1, marginLeft: Spacing.md }}>
-          <Text style={styles.ctaTitle}>Scanner un repas</Text>
-          <Text style={styles.ctaSubtitle}>Analyse IA instantanée</Text>
-        </View>
-        <Text style={{ color: Colors.primary, fontSize: 20 }}>→</Text>
-      </TouchableOpacity>
+      <Link href="/scan" asChild>
+        <TouchableOpacity style={styles.scanCTA} activeOpacity={0.85}>
+          <Text style={{ fontSize: 28 }}>📷</Text>
+          <View style={{ flex: 1, marginLeft: Spacing.md }}>
+            <Text style={styles.ctaTitle}>Scanner un repas</Text>
+            <Text style={styles.ctaSubtitle}>Analyse IA instantanée</Text>
+          </View>
+          <Text style={{ color: Colors.primary, fontSize: 20 }}>→</Text>
+        </TouchableOpacity>
+      </Link>
     </ScrollView>
   );
 }

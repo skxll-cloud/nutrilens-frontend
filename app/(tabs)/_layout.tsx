@@ -31,24 +31,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          href: '/',
           tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" label="Accueil" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="scan"
         options={{
+          href: '/scan',
           tabBarIcon: ({ focused }) => <TabIcon emoji="📷" label="Scanner" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
+          href: '/history',
           tabBarIcon: ({ focused }) => <TabIcon emoji="📋" label="Historique" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
+          href: '/profile',
           tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" label="Profil" focused={focused} />,
         }}
       />
