@@ -452,7 +452,8 @@ const s: Record<string, CSSProperties> = {
     fontSize: 12, color: C.primary, fontWeight: 600,
   },
   fab: {
-    position: 'absolute', bottom: 84, right: 20,
+    position: 'absolute', bottom: 84,
+    left: '50%', transform: 'translateX(-50%)',
     width: 60, height: 60, borderRadius: '50%',
     background: C.primary, border: 'none', cursor: 'pointer',
     display: 'flex', alignItems: 'center', justifyContent: 'center',

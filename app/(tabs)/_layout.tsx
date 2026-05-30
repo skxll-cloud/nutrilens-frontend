@@ -1,7 +1,7 @@
 // app/(tabs)/_layout.tsx
 import React from 'react';
-import { Tabs } from 'expo-router';
-import { View, Text, StyleSheet } from 'react-native';
+import { Tabs, Slot } from 'expo-router';
+import { Platform, View, Text, StyleSheet } from 'react-native';
 import { Colors, Spacing } from '../../src/utils/theme';
 
 function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focused: boolean }) {
@@ -14,6 +14,12 @@ function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focu
 }
 
 export default function TabLayout() {
+  // On web, _layout.web.tsx owns the full layout (nav bar + FAB).
+  // Render Slot only so the two layouts don't stack and create a double nav bar.
+  if (Platform.OS === 'web') {
+    return <Slot />;
+  }
+
   return (
     <Tabs
       screenOptions={{
